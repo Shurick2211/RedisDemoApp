@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 public class ProcessService {
 
   private final RedissonClient redisson;
-  private final ExecutorService executor = Executors.newSingleThreadExecutor();
+  private final ExecutorService executor = Executors.newFixedThreadPool(2);
 
   @PostConstruct
   public void start() {
