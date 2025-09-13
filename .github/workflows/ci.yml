@@ -30,8 +30,8 @@ jobs:
 
       - name: Build Docker images
         run: |
-          docker build -t ghcr.io/${{ github.repository }}/rest-service:latest rest-service
-          docker build -t ghcr.io/${{ github.repository }}/process-service:latest process-service
+          docker build -t ghcr.io/shurick2211/redisdemoapp/rest-service:latest rest-service
+          docker build -t ghcr.io/shurick2211/redisdemoapp/process-service:latest process-service
 
       - name: Run Integration Tests
         run: ./gradlew :test-service:test
