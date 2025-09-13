@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,15 +17,24 @@ public class RedisService {
 
   private final RedissonClient redissonClient;
 
+  @Value("${transport.timeout}")
+  private int timeout;
+
+  @Value("${redis.requests}")
+  private String requests;
+
+  @Value("${redis.responses}")
+  private String responses;
+
   public Optional<String> processMessage(final String message) {
     final String messId = UUID.randomUUID().toString();
     try {
-      final RBlockingQueue<String> requestQueue = redissonClient.getBlockingQueue("requests");
+      final RBlockingQueue<String> requestQueue = redissonClient.getBlockingQueue(requests);
       requestQueue.put(messId + "|" + message);
 
       final RBlockingQueue<String> responseQueue = redissonClient.getBlockingQueue(
-          "responses:" + messId);
-      final String response = responseQueue.poll(10, TimeUnit.SECONDS);
+          responses + ":" + messId);
+      final String response = responseQueue.poll(timeout, TimeUnit.SECONDS);
       log.info("{}.processMessage() response: {}", getClass().getSimpleName(), response);
       return Optional.ofNullable(response);
     } catch (final InterruptedException e) {

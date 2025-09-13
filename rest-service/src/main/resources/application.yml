@@ -3,3 +3,12 @@ spring:
     name: rest-service
 server:
   port: 8081
+
+transport:
+  timeout: 1
+
+redis:
+  host: "localhost"
+  port: 6379
+  requests: "requests"
+  responses: "responses"
