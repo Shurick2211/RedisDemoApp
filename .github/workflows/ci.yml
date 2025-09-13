@@ -19,8 +19,14 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Build all modules
-        run: ./gradlew clean build -x test
+      - name: permission for gradle wrapper
+        run: chmod +x gradlew
+
+      - name: Build Process
+        run: ./gradlew :process-service:bootJar
+
+      - name: Build Rest
+        run: ./gradlew :rest-service:bootJar
 
       - name: Build Docker images
         run: |
