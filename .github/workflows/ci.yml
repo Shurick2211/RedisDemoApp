@@ -34,4 +34,4 @@ jobs:
           docker build -t ghcr.io/shurick2211/redisdemoapp/process-service:latest process-service
 
       - name: Run Integration Tests
-        run: ./gradlew :test-service:test
+        run: ./gradlew :rest-service:test

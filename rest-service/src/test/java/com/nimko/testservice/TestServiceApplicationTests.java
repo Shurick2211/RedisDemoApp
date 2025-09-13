@@ -34,7 +34,7 @@ class TestServiceApplicationTests {
             .withEnv("REDIS_HOST", "redis")) {
           rest.start();
 
-          final String url = "http://" + rest.getHost() + ":" + rest.getMappedPort(8081) + "/send";
+          final String url = "http://" + rest.getHost() + ":" + rest.getMappedPort(8081) + "/messages";
           final RestTemplate restTemplate = new RestTemplate();
 
           final String response = restTemplate.postForObject(url, "hello redis", String.class);
