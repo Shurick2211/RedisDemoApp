@@ -21,13 +21,13 @@ class TestServiceApplicationTests {
         .withNetworkAliases("redis")) {
       redis.start();
 
-      try (final GenericContainer<?> process = new GenericContainer<>("ghcr.io/shurick2211/process-service:latest")
+      try (final GenericContainer<?> process = new GenericContainer<>("ghcr.io/shurick2211/redisdemoapp/process-service:latest")
           .withNetwork(network)
           .dependsOn(redis)
           .withEnv("REDIS_HOST", "redis")) {
         process.start();
 
-        try (final GenericContainer<?> rest = new GenericContainer<>("ghcr.io/shurick2211/rest-service:latest")
+        try (final GenericContainer<?> rest = new GenericContainer<>("ghcr.io/shurick2211/redisdemoapp/rest-service:latest")
             .withExposedPorts(8081)
             .withNetwork(network)
             .dependsOn(redis, process)
